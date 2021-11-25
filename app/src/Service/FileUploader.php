@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\String\Slugger\SluggerInterface;
@@ -17,6 +18,7 @@ class FileUploader
     private SluggerInterface $slugger;
     private UrlHelper $urlHelper;
     private string $relativeUploadsDir;
+    private LoggerInterface $logger;
 
     /**
      * FileUploader constructor.
@@ -24,12 +26,20 @@ class FileUploader
      * @param string $uploadPath
      * @param SluggerInterface $slugger
      * @param UrlHelper $urlHelper
+     * @param LoggerInterface $logger
      */
-    public function __construct(string $publicPath, string $uploadPath, SluggerInterface $slugger, UrlHelper $urlHelper)
+    public function __construct(
+        string $publicPath,
+        string $uploadPath,
+        SluggerInterface $slugger,
+        UrlHelper $urlHelper,
+        LoggerInterface $logger
+    )
     {
         $this->uploadPath = $uploadPath;
         $this->slugger = $slugger;
         $this->urlHelper = $urlHelper;
+        $this->logger = $logger;
 
         $this->relativeUploadsDir = str_replace($publicPath, '', $this->uploadPath) . '/';
     }
@@ -46,8 +56,8 @@ class FileUploader
 
         try {
             $file->move($this->getUploadPath(), $fileName);
-        } catch (FileException $e) {
-            //@TODO - logger
+        } catch (FileException $exception) {
+            $this->logger->info($exception->getMessage());
         }
 
         return $fileName;
