@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Posts{% endblock %}
+
+{% block body %}
+    <style>
+        .wrapper {
+            margin: 1em auto;
+            width: 95%;
+        }
+    </style>
+
+    <div class="wrapper">
+        <h1>Blog</h1>
+
+        <a href="/get">Post list</a>
+
+        {# For convenience sake of this snippet, store the errors in a variable #}
+        {% set formErrors = form.vars.errors.form.getErrors(true) %}
+
+        {# If there are errors in the form, display them in this unorganized list #}
+        {% if formErrors|length %}
+            <h6>Errors:</h6>
+            <ul>
+                {% for error in formErrors %}
+                    <li>{{ error.message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        {{ form(form) }}
+    </div>
+{% endblock %}

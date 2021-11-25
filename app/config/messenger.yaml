@@ -1,0 +1,18 @@
+#framework:
+#  messenger:
+#    failure_transport: failed
+#    transports:
+#      failed:
+#        dsn: 'doctrine://default'
+#        options:
+#          table_name: failed_messages
+#      amqp_add_post:
+#        dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
+#        options:
+#          exchange:
+#            name: posts
+#            type: fanout
+#          queues:
+#            posts: ~
+#    routing:
+#      App\Command\AddPost: amqp_add_post
