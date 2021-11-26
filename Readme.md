@@ -20,3 +20,17 @@ php bin/console --env=test doctrine:schema:create
 ## Documentation
 
 - Open `http://localhost:8080/api` - you will see Swagger UI for blog endpoints
+
+## Screenshots
+
+- Main page - list of all posts
+![Index](https://github.com/lykoszczan/symfony-docker-blog-api/blob/main/screenshosts/main.png)
+
+- Page of specific post
+![Post](https://github.com/lykoszczan/symfony-docker-blog-api/blob/main/screenshosts/post.png)
+
+- Form to add new
+![Add](https://github.com/lykoszczan/symfony-docker-blog-api/blob/main/screenshosts/add.png)
+
+- API documentation
+![API](https://github.com/lykoszczan/symfony-docker-blog-api/blob/main/screenshosts/api.png)
